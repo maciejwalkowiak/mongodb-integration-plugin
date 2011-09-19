@@ -5,11 +5,16 @@
 This maven plugin manages a mongodb instance to be used during integration testing.
 
 The plugin will start a mongod instance during the 'pre-integration-test' phase of the default maven lifecyle.
-The plugin can be configured to prepopulate the database with data from various files. The plugin uses mongoimport for this.
+The plugin can be configured to prepopulate the database with data from various files. The plugin uses mongoimport
+for this.
 
 The plugin will stop the mongod instance during the 'post-integration-test' phase.
 
-Should the build fail during the 'integration-test' phase, a special shutdown hook will ensure that the mongod instance is still shutdown.
+Should the build fail during the 'integration-test' phase, a special shutdown hook will ensure that the mongod instance
+is still shutdown.
+
+In theory, you would use this plugin with something like the Failsafe Plugin which is responsible for running
+integration tests during the maven 'integration-test' phase.
 
 **********************************
 *** Prerequisites
@@ -84,3 +89,35 @@ dbInitFiles -                       Optional parameter; this is specified, then 
 secondsToWaitForMongodStartup -     Optional parameter; specifies the amount of time (in seconds) to wait between
                                     starting mongod and importing data into the database. This only applies if 
                                     'databaseName' and 'dbInitFiles' are configured. The default value is 2 seconds.
+
+**********************************
+*** Failsafe Plugin Configuration
+**********************************
+
+To be of any actual use, this mongodb integration plugin needs integration tests. Below is an
+example Failsafe Plugin configuration which will execute src/test/java/**/*IT.java tests.
+
+<plugins>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>2.9</version>
+        <executions>
+            <execution>
+                <id>integration-test</id>
+                <goals>
+                    <goal>integration-test</goal>
+                </goals>
+            </execution>
+            <execution>
+                <id>verify</id>
+                <goals>
+                    <goal>verify</goal>
+                </goals>
+            </execution>
+        </executions>
+    </plugin>
+</plugins>
+
+To execute the whole build/integration test process with mongodb you would then execute:
+mvn verify
