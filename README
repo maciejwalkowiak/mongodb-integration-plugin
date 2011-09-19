@@ -1,0 +1,83 @@
+**********************************
+*** Overview
+**********************************
+
+This maven plugin manages a mongodb instance to be used during integration testing.
+
+The plugin will start a mongod instance during the 'pre-integration-test' phase of the default maven lifecyle.
+The plugin can be configured to prepopulate the database with data from various files. The plugin uses mongoimport for this.
+
+The plugin will stop the mongod instance during the 'post-integration-test' phase.
+
+Should the build fail during the 'integration-test' phase, a special shutdown hook will ensure that the mongod instance is still shutdown.
+
+**********************************
+*** Prerequisites
+**********************************
+
+You will need to have mongodb installed on the machine where the maven build/integration tests will run.
+The system user that will execute the maven build will need permissions to execute the mongod and mongoimport binaries.
+The directory that stores the mongodb databases must exist.
+
+**********************************
+*** POM Configuration
+**********************************
+
+In order to use this plugin in a project, add the following to your pom:
+
+<build>
+    <plugins>
+        <plugin>
+            <groupId>biz.neustar.webmetrics.maven.plugins</groupId>
+            <artifactId>mongodb-integration</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <configuration>
+                <absolutePathToMongod>/Users/batman/src/mongodb-osx-x86_64-1.8.2/bin/mongod</absolutePathToMongod>
+                <absolutePathToDatabaseDirectory>/Users/batman/mongodata</absolutePathToDatabaseDirectory>
+                <absolutePathToMongoimport>/Users/batman/src/mongodb-osx-x86_64-1.8.2/bin/mongoimport</absolutePathToMongoimport>
+                <databaseName>test</databaseName>
+                <dbInitFiles>
+                    <foo>/Users/batman/mongodb-init-data.txt</foo>
+                </dbInitFiles>
+            </configuration>
+            <executions>
+                <execution>
+                    <id>start-mongod</id>
+                    <goals>
+                        <goal>start-mongod</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>stop-mongod</id>
+                    <goals>
+                        <goal>stop-mongod</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
+
+**********************************
+*** Plugin Configuration
+**********************************
+
+absolutePathToMongod -              The path to the mongod binary.
+
+absolutePathToMongoimport -         The path to the mongoimport binary.
+
+absolutePathToDatabaseDirectory -   Optional parameter. The path to the directory that stores the mongo database files. This folder must exist beforehand.
+                                    It is passed as the '--dbpath' argument to mongod. By default, mongod will store data in /data/db
+                                    although it won't automatically create that directory. The default value for this property is '/data/db'.
+
+databaseName -                      Optional parameter; if this is specified, then the 'dbInitFiles' parameter must be defined.
+                                    The name of the database into which the data files will be loaded. This database will be
+                                    created if it does not already exist.
+
+dbInitFiles -                       Optional parameter; this is specified, then the 'databaseName' parameter must be defined.
+                                    A map of collection names to data file names. In the example above, the file
+                                    'mongodb-init-data.txt' will be loaded into a collection named 'foo' in the
+                                    database named 'test'.
+
+secondsToWaitForMongodStartup -     Optional parameter; specifies the amount of time (in seconds) to wait between starting mongod and importing data
+                                    into the database. This only applies if 'databaseName' and 'dbInitFiles' are configured. The default value is 2 seconds.
