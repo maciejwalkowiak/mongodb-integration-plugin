@@ -66,18 +66,21 @@ absolutePathToMongod -              The path to the mongod binary.
 
 absolutePathToMongoimport -         The path to the mongoimport binary.
 
-absolutePathToDatabaseDirectory -   Optional parameter. The path to the directory that stores the mongo database files. This folder must exist beforehand.
-                                    It is passed as the '--dbpath' argument to mongod. By default, mongod will store data in /data/db
-                                    although it won't automatically create that directory. The default value for this property is '/data/db'.
+absolutePathToDatabaseDirectory -   Optional parameter. The path to the directory that stores the mongo database files.
+                                    This folder must exist beforehand.
+                                    It is passed as the '--dbpath' argument to mongod. By default, mongod will store
+                                    data in /data/db although it won't automatically create that directory. The default
+                                    value for this property is '/data/db'.
 
-databaseName -                      Optional parameter; if this is specified, then the 'dbInitFiles' parameter must be defined.
-                                    The name of the database into which the data files will be loaded. This database will be
-                                    created if it does not already exist.
+databaseName -                      Optional parameter; if this is specified, then the 'dbInitFiles' parameter must be
+                                    defined. The name of the database into which the data files will be loaded. This
+                                    database will be created if it does not already exist.
 
-dbInitFiles -                       Optional parameter; this is specified, then the 'databaseName' parameter must be defined.
-                                    A map of collection names to data file names. In the example above, the file
-                                    'mongodb-init-data.txt' will be loaded into a collection named 'foo' in the
+dbInitFiles -                       Optional parameter; this is specified, then the 'databaseName' parameter must be
+                                    defined. A map of collection names to data file names. In the example above, the
+                                    file 'mongodb-init-data.txt' will be loaded into a collection named 'foo' in the
                                     database named 'test'.
 
-secondsToWaitForMongodStartup -     Optional parameter; specifies the amount of time (in seconds) to wait between starting mongod and importing data
-                                    into the database. This only applies if 'databaseName' and 'dbInitFiles' are configured. The default value is 2 seconds.
+secondsToWaitForMongodStartup -     Optional parameter; specifies the amount of time (in seconds) to wait between
+                                    starting mongod and importing data into the database. This only applies if 
+                                    'databaseName' and 'dbInitFiles' are configured. The default value is 2 seconds.
