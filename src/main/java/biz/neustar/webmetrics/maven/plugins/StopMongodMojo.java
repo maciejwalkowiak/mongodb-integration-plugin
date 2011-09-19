@@ -21,7 +21,7 @@ public class StopMongodMojo extends AbstractMojo {
 
         PluginLog.setLog(getLog());
 
-        MongodManager.getInstance().stopMongoDb();
+        MongoManager.getInstance().stopMongoDb();
     }
 
 }

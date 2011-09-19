@@ -76,13 +76,13 @@ public class StartMongodMojo extends AbstractMojo {
 
         PluginLog.setLog(getLog());
 
-        MongodManager.getInstance().init(absolutePathToMongod, absolutePathToDatabaseDirectory);
+        MongoManager.getInstance().init(absolutePathToMongod, absolutePathToDatabaseDirectory);
 
-        MongodManager.getInstance().startMongoDb();
+        MongoManager.getInstance().startMongoDb();
 
         if( dbInitFiles != null && ! dbInitFiles.isEmpty() ){
             wait(secondsToWaitForMongodStartup);
-            MongodManager.getInstance().importFile(absolutePathToMongoimport, databaseName, dbInitFiles);
+            MongoManager.getInstance().importFile(absolutePathToMongoimport, databaseName, dbInitFiles);
         }
     }
 

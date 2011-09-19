@@ -8,14 +8,14 @@ import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class MongodManager {
+public class MongoManager {
 
     //------------------------------------------------------------------------------------------
     //Inner classes
     //------------------------------------------------------------------------------------------
 
-    private static class MongoDbManagerHolder {
-        public static final MongodManager MONGOD_MANAGER = new MongodManager();
+    private static class MongoManagerHolder {
+        public static final MongoManager MONGO_MANAGER = new MongoManager();
     };
 
     //------------------------------------------------------------------------------------------
@@ -32,14 +32,14 @@ public class MongodManager {
     //Constructors
     //------------------------------------------------------------------------------------------
 
-    private MongodManager(){}
+    private MongoManager(){}
 
     //------------------------------------------------------------------------------------------
     //Class methods
     //------------------------------------------------------------------------------------------
 
-    public static MongodManager getInstance(){
-        return MongoDbManagerHolder.MONGOD_MANAGER;
+    public static MongoManager getInstance(){
+        return MongoManagerHolder.MONGO_MANAGER;
     }
 
     //------------------------------------------------------------------------------------------
@@ -157,7 +157,7 @@ public class MongodManager {
 
                 if( mongodProcess != null ){
                     PluginLog.getLog().warn("Mongod will be stopped by shutdown hook!");
-                    MongodManager.getInstance().stopMongoDb();
+                    MongoManager.getInstance().stopMongoDb();
                 }
             }
         }, "Mongod shutdown hook");
