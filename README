@@ -81,7 +81,7 @@ databaseName -                      Optional parameter; if this is specified, th
                                     defined. The name of the database into which the data files will be loaded. This
                                     database will be created if it does not already exist.
 
-dbInitFiles -                       Optional parameter; this is specified, then the 'databaseName' parameter must be
+dbInitFiles -                       Optional parameter; if this is specified, then the 'databaseName' parameter must be
                                     defined. A map of collection names to data file names. In the example above, the
                                     file 'mongodb-init-data.txt' will be loaded into a collection named 'foo' in the
                                     database named 'test'.
