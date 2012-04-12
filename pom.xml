@@ -6,7 +6,7 @@
 
     <groupId>biz.neustar.webmetrics.maven.plugins</groupId>
     <artifactId>mongodb-integration</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>maven-plugin</packaging>
     <name>MongoDB Integration Test Plugin</name>
     <description>Sets up and tears down a MongoDB instance for integration tests</description>
